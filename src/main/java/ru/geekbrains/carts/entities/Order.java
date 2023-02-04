@@ -32,24 +32,22 @@ public class Order {
     private Address deliveryAddress;
 
     @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name="billing_addr_id")
-    private Address billingAddress;
-
-    @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="payment_id")
     private Payment payment;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public Order() {
+    public Order(){
         this.items = new HashSet<OrderItem>();
         this.status = OrderStatus.NEW;
     }
 
-    public BigDecimal getTotalAmount() {
+    public BigDecimal getTotalAmount(){
+
         BigDecimal amount = new BigDecimal("0.0");
-        for (OrderItem item : items) {
+
+        for (OrderItem item : items){
             amount = amount.add(item.getSubTotal());
         }
         return amount;

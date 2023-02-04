@@ -10,14 +10,16 @@ import javax.validation.constraints.Email;
 @Table(name="customers")
 @Getter
 @Setter
-public class Customer {
+public class Customer{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name="firstname", nullable=false)
 
     @NotEmpty
     private String firstName;
+
     @Column(name="lastname")
     private String lastName;
 
