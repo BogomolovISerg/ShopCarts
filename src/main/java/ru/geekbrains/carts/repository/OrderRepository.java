@@ -2,11 +2,9 @@ package ru.geekbrains.carts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.geekbrains.carts.entities.Category;
+import ru.geekbrains.carts.entities.Order;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Integer>{
-    Category getByName(String name);
+public interface OrderRepository extends JpaRepository<Order, Integer>{
+    Order findByOrderNumber(String orderNumber);
 }
-
-
