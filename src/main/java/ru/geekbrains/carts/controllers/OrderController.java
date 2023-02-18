@@ -38,7 +38,7 @@ public class OrderController extends SiteController{
     public String placeOrder(@Valid @ModelAttribute("order") OrderDTO order,
                              BindingResult result, Model model, HttpServletRequest request){
         Cart cart = getOrCreateCart(request);
-        if (result.hasErrors()) {
+        if (result.hasErrors()){
             model.addAttribute("cart", cart);
             return "checkout";
         }
@@ -91,5 +91,4 @@ public class OrderController extends SiteController{
         model.addAttribute("order", order);
         return "view_order";
     }
-
 }

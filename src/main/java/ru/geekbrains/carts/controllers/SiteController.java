@@ -26,8 +26,7 @@ public abstract class SiteController{
     }
 
     @ModelAttribute("headerTitle")
-    public String headerTitle()
-    {
+    public String headerTitle(){
         return getHeaderTitle();
     }
 
