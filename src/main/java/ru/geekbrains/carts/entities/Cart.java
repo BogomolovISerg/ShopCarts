@@ -1,75 +1,70 @@
 package ru.geekbrains.carts.entities;
 
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cart{
-    private List<LineItem> items;
+    private Map<String,LineItem> items;
     private Customer customer;
     private Payment payment;
 
     public Cart(){
-        items = new ArrayList<LineItem>();
+        items = new HashMap<>();
         customer = new Customer();
         payment = new Payment();
     }
 
     public void addItem(Product product){
-        for (LineItem lineItem : items){
-            if(lineItem.getProduct().getCod().equals(product.getCod())){
-                lineItem.setQuantity(lineItem.getQuantity()+1);
-            }
+
+        LineItem lineItem = items.get(product.getCod());
+        if(lineItem != null){
+            lineItem.setQuantity(lineItem.getQuantity()+1);
         }
+
         LineItem item = new LineItem(product, 1);
-        this.items.add(item);
+        this.items.put(product.getCod(),item);
     }
 
     public void updateItemQuantity(Product product, int quantity){
-        for (LineItem lineItem : items){
-            if(lineItem.getProduct().getCod().equals(product.getCod())){
-                lineItem.setQuantity(quantity);
-            }
+        LineItem lineItem = items.get(product.getCod());
+        if(lineItem != null) {
+            lineItem.setQuantity(quantity);
         }
     }
 
     public void removeItem(String cod){
-        LineItem  item = null;
-        for (LineItem lineItem : items){
-            if(lineItem.getProduct().getCod().equals(cod)){
-                item = lineItem;
-                break;
-            }
-        }
-        if(item != null){
-            items.remove(item);
-        }
+        items.remove(cod);
     }
 
     public void clearItems(){
-        items = new ArrayList<>();
+        items = new HashMap<>();
     }
 
     public int getItemCount(){
         int count = 0;
-        for (LineItem lineItem : items){
-            count +=  lineItem.getQuantity();
+        for (Map.Entry<String,LineItem> entry : items.entrySet()) {
+            count +=  entry.getValue().getQuantity();
         }
         return count;
     }
 
-    public List<LineItem> getItems(){
+    public Map<String,LineItem> getItems(){
         return items;
     }
 
-    public void setItems(List<LineItem> items){
+    public void setItems(Map<String,LineItem> items){
         this.items = items;
     }
 
     public BigDecimal getTotalAmount(){
         BigDecimal amount = new BigDecimal("0.0");
-        for (LineItem lineItem : items){
-            amount = amount.add(lineItem.getSubTotal());
+
+        for (Map.Entry<String,LineItem> entry : items.entrySet()) {
+            amount = amount.add(entry.getValue().getSubTotal());
         }
         return amount;
     }

@@ -1,6 +1,6 @@
 package ru.geekbrains.carts.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
