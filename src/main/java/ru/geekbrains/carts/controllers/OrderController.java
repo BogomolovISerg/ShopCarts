@@ -49,7 +49,7 @@ public class OrderController extends SiteController{
         Customer customer = customerService.getCustomerByEmail(email);
         newOrder.setCustomer(customer);
         Address address = new Address();
-        address.setAddressLine(order.getAddressLine1());
+        address.setAddressLine(order.getAddressLine());
         address.setCity(order.getCity());
         address.setCountry(order.getCountry());
 
