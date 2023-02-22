@@ -25,8 +25,7 @@ public class CustomerController extends SiteController{
     @Autowired protected PasswordEncoder passwordEncoder;
 
     @Override
-    protected String getHeaderTitle()
-    {
+    protected String getHeaderTitle(){
         return "Login/Register";
     }
 

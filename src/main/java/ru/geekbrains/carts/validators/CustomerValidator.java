@@ -19,7 +19,7 @@ public class CustomerValidator implements Validator{
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(Object target, Errors errors){
         Customer customer = (Customer) target;
         Customer customerByEmail = customerService.getCustomerByEmail(customer.getEmail());
         if(customerByEmail != null){

@@ -56,10 +56,10 @@ public class CartController extends SiteController{
     @ResponseBody
     public void updateCartItem(@RequestBody LineItem item, HttpServletRequest request, HttpServletResponse response){
         Cart cart = getOrCreateCart(request);
-        if (item.getQuantity() <= 0) {
+        if (item.getQuantity() <= 0){
             String pCode = item.getProduct().getCod();
             cart.removeItem(pCode);
-        } else {
+        } else{
             cart.updateItemQuantity(item.getProduct(), item.getQuantity());
         }
     }
