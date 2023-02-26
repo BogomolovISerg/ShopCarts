@@ -47,7 +47,7 @@ public class CustomerController extends SiteController{
         customer.setPassword(encodedPwd);
 
         Customer persistedCustomer = customerService.createCustomer(customer);
-        redirectAttributes.addFlashAttribute("info", "Customer created successfully");
+        redirectAttributes.addFlashAttribute("info", "Клиент успешно создан");
         return "redirect:/login";
     }
 
