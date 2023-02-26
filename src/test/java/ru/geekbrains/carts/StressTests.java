@@ -13,6 +13,8 @@ import ru.geekbrains.carts.controllers.ProductController;
 import ru.geekbrains.carts.entities.Product;
 import ru.geekbrains.carts.api.HttpAPI;
 import ru.geekbrains.carts.controllers.HomeController;
+import ru.geekbrains.carts.service.CustomerService;
+import ru.geekbrains.carts.service.CatalogService;
 
 import javax.net.ssl.SSLHandshakeException;
 import java.io.BufferedReader;
@@ -35,6 +37,12 @@ public class StressTests {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    CatalogService catalogService;
+
+    @Autowired
+    CustomerService customerService;
 
     @MockBean
     private ProductController productController;
@@ -91,7 +99,7 @@ public class StressTests {
 
     @Test(expected = NullPointerException.class)
     public void getAllInitialCustomersEmailsAPITest(){
-        HttpAPI api = new HttpAPI();
+        HttpAPI api = new HttpAPI(catalogService, customerService);
         System.out.println(Arrays.toString(new ArrayList[]{api.allCustomersEmails()}));
     }
 

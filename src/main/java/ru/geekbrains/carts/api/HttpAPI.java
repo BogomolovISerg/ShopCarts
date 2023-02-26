@@ -1,10 +1,7 @@
 package ru.geekbrains.carts.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.carts.entities.Product;
 import ru.geekbrains.carts.service.CatalogService;
 import ru.geekbrains.carts.service.CustomerService;
@@ -19,20 +16,22 @@ import java.util.List;
 @RequestMapping("/api")
 public class HttpAPI {
 
-    @Autowired
-    CatalogService catalogService;
+    final CatalogService catalogService;
+    final CustomerService customerService;
 
     @Autowired
-    CustomerService customerService;
-
-
-    @RequestMapping(value = "/products/{pCode}", method = RequestMethod.GET)
-    public String product(@PathVariable String pCode){
-        Product product = catalogService.getProductByPCode(pCode);
-        return product.toString();
+    public HttpAPI(CatalogService catalogService, CustomerService customerService) {
+        this.catalogService = catalogService;
+        this.customerService = customerService;
     }
 
-    @RequestMapping(value = "/allCategoriesNames", method = RequestMethod.GET)
+    @GetMapping(value = "/products/{pCode}")
+    public Product product(@PathVariable String pCode){
+        Product product = catalogService.getProductByPCode(pCode);
+        return product;
+    }
+
+    @GetMapping(value = "/allCategoriesNames")
     public ArrayList<String> allCategoriesNames(){
         List<Category> categories = catalogService.getAllCategories();
         ArrayList<String> result = new ArrayList<>();
@@ -42,17 +41,12 @@ public class HttpAPI {
         return result;
     }
 
-    @RequestMapping(value = "/allProductsNames", method = RequestMethod.GET)
-    public ArrayList<String> allProductsNames(){
-        List<Product> products = catalogService.getAllProducts();
-        ArrayList<String> result = new ArrayList<>();
-        for (Product product : products) {
-            result.add(product.getName());
-        }
-        return result;
+    @GetMapping(value = "/allProductsNames")
+    public List<Product>  allProductsNames(){
+        return catalogService.getAllProducts();
     }
 
-    @RequestMapping(value = "/allProductsCodes", method = RequestMethod.GET)
+    @GetMapping(value = "/allProductsCodes")
     public ArrayList<String> allProductsCodes(){
         List<Product> products = catalogService.getAllProducts();
         ArrayList<String> result = new ArrayList<>();
@@ -62,7 +56,7 @@ public class HttpAPI {
         return result;
     }
 
-    @RequestMapping(value = "/allProductsNamesAndPrices", method = RequestMethod.GET)
+    @GetMapping(value = "/allProductsNamesAndPrices")
     public HashMap<String, String> allProductsNamesAndPrices(){
         List<Product> products = catalogService.getAllProducts();
         HashMap<String, String> result = new HashMap<>();
@@ -72,7 +66,7 @@ public class HttpAPI {
         return result;
     }
 
-    @RequestMapping(value = "/allCustomersEmails", method = RequestMethod.GET)
+    @GetMapping(value = "/allCustomersEmails")
     public ArrayList<String> allCustomersEmails(){
         List<Customer> customers = customerService.getAllCustomers();
         ArrayList<String> result = new ArrayList<>();
